@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-   
-   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script> <script> window.OneSignalDeferred = window.OneSignalDeferred || []; OneSignalDeferred.push(function(OneSignal) { OneSignal.init({ appId: "2728f2fc-a363-480f-9e35-87a2371ef1fe", safari_web_id: "web.onesignal.auto.2b467c5d-2ccd-4e09-a57b-cb7ab9efd0c0", notifyButton: { enable: true, }, }); }); </script>
-   
+     
+ 
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(function(OneSignal) {
+    OneSignal.init({
+      appId: "2728f2fc-a363-480f-9e35-87a2371ef1fe",
+      safari_web_id: "web.onesignal.auto.2b467c5d-2ccd-4e09-a57b-cb7ab9efd0c0",
+      notifyButton: {
+        enable: true,
+      },
+    });
+  }); // Tambahkan kurung kurawal penutup untuk OneSignalDeferred.push
+</script>
+ <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -394,6 +406,36 @@ article {
         }
 
 
+.floating-alert {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: none; /* Mulai dengan peringatan tersembunyi */
+  z-index: 999; /* Pastikan peringatan muncul di atas konten lain */
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #ccc;
+}
+
+
 </style>
 
 
@@ -428,7 +470,11 @@ article {
   
   </header>
   
- 
+ <div id="floatingAlert" class="floating-alert">
+  <span id="alertMessage"></span>
+  <button id="closeAlertBtn" class="close-btn">×</button>
+</div>
+
   
  
 
@@ -769,25 +815,37 @@ function scrollToTop() {
     
     <!-- notifikasi -->
    
-        
+        document.getElementById("subscribeBtn").addEventListener("click", function() {
+    // Panggil fungsi untuk subscribe ke notifikasi OneSignal
+    OneSignal.push(["registerForPushNotifications"]);
 
-        document.getElementById('subscribeBtn').addEventListener('click', function() {
-            // Menampilkan pesan konfirmasi
-            var userConfirmed = confirm("Dapatkan notifikasi dan informasi dari kami?");
-            
-            if (userConfirmed) {
-                // Jika pengguna setuju, tampilkan pop-up notifikasi OneSignal
-                OneSignal.showSlidedownPrompt();
-            }
-        });
-   <!-- notifikasi -->
-        
+    // Ubah status tombol lonceng menjadi subscribed
+    this.classList.add("subscribed");
+    this.disabled = true; // Non-aktifkan tombol setelah berhasil subscribe
+
+    // Tampilkan peringatan mengambang
+    const floatingAlert = document.getElementById("floatingAlert");
+    const alertMessage = document.getElementById("alertMessage");
+    const closeAlertBtn = document.getElementById("closeAlertBtn");
+
+    alertMessage.textContent = "Anda berhasil berlangganan notifikasi.";
+    floatingAlert.style.display = "block";
+
+    // Sembunyikan peringatan mengambang setelah 5 detik
+    setTimeout(function() {
+      floatingAlert.style.display = "none";
+    }, 5000);
+  });
+
+  // Event listener untuk menutup peringatan mengambang
+  document.getElementById("closeAlertBtn").addEventListener("click", function() {
+    document.getElementById("floatingAlert").style.display = "none";
+  });
+
+
+
+
 </script>
 
 </body>
 </html>
-
-
-
-
- 
