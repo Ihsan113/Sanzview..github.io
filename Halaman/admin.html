@@ -11,12 +11,25 @@
       padding: 0;
     }
 
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
+   header {
+      
+      color: black;
+      
       text-align: center;
     }
+
+    nav {
+      text-align: center;
+      margin-bottom: 0px;
+      
+    }
+
+    nav a {
+      color: black;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
 
     h1 {
       margin: 0;
@@ -50,21 +63,130 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
+    .edit-button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* CSS untuk modal */
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: auto;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Membuat tampilan modal menjadi efek fading saat muncul */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%; /* Mengatur lebar modal agar mengisi seluruh lebar layar */
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Membuat tampilan modal menjadi efek fading saat muncul */
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% 10%; /* Mengubah margin agar modal terletak lebih ke tengah */
+  padding: 15px;
+  border-radius: 10px; /* Menambahkan sudut melengkung pada modal */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan untuk tampilan lebih mendalam */
+  width: 80%; /* Lebar modal yang sedikit lebih kecil */
+  max-width: 600px; /* Menetapkan lebar maksimum modal */
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%; /* Mengurangi lebar modal untuk layar kecil */
+    margin: 10% 5%; /* Mengubah margin agar modal terletak lebih ke tengah pada layar kecil */
+  }
+}
+
+.modal-buttons {
+  text-align: right;
+  margin-top: 15px; /* Menambahkan sedikit jarak antara tombol dan konten modal */
+}
+
+.modal-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-buttons button:hover {
+  background-color: #0056b3; /* Efek warna saat tombol dihover */
+}
+
   </style>
 </head>
 <body>
   <header>
-    <h1>Admin Panel - Manage Content</h1>
+    <h1>Visitor Counter Admin</h1>
+    <nav>
+      <a href="admin.html">Konten</a>
+      <a href="Dasbord.html">Dasbord</a>
+      <a href="#">Settings</a>
+    </nav>
   </header>
-
+  
   <div id="contentList">
     <!-- Daftar konten akan ditampilkan di sini -->
+  </div>
+
+  <!-- Modal untuk mengedit konten -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h2>Edit Content</h2>
+      <label for="editTitle">Title:</label>
+      <input type="text" id="editTitle" name="editTitle"><br><br>
+      <label for="editImage">Image URL:</label>
+      <input type="text" id="editImage" name="editImage"><br><br>
+      <label for="editDescription">Description:</label><br>
+     <textarea id="editDescription" name="editDescription" rows="4" style="width: 100%;" placeholder="Enter description..."></textarea><br><br>
+
+      <label for="editCategory">Category:</label>
+      <input type="text" id="editCategory" name="editCategory"><br><br>
+      <div class="modal-buttons">
+        <button id="saveChanges">Save Changes</button>
+        <button id="closeModal">Close</button>
+      </div>
+    </div>
   </div>
 
   <!-- Firebase JavaScript SDK -->
   <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
- <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
   <script>
     // Konfigurasi Firebase
     const firebaseConfig = {
@@ -124,15 +246,74 @@
           });
         });
 
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.classList.add("edit-button");
+        editButton.addEventListener("click", () => {
+          // Panggil fungsi editContent untuk menangani pengeditan konten
+          editContent(doc.id, data.title, data.imageUrl, data.summary, data.category);
+        });
+
         contentItem.appendChild(title);
         contentItem.appendChild(image);
         contentItem.appendChild(summary);
         contentItem.appendChild(category);
         contentItem.appendChild(deleteButton);
+        contentItem.appendChild(editButton);
 
         contentList.appendChild(contentItem);
       });
     });
+
+    // Fungsi untuk menampilkan modal pengeditan konten
+    function editContent(docId, title, imageUrl, summary, category) {
+      // Mendapatkan elemen-elemen formulir dari modal
+      const editTitle = document.getElementById("editTitle");
+      const editImage = document.getElementById("editImage");
+      const editDescription = document.getElementById("editDescription");
+      const editCategory = document.getElementById("editCategory");
+
+      // Mengisi nilai dari elemen-elemen formulir dengan data konten yang sedang diedit
+      editTitle.value = title;
+      editImage.value = imageUrl;
+      editDescription.value = summary;
+      editCategory.value = category;
+
+      // Menampilkan modal pengeditan konten
+      const editModal = document.getElementById("editModal");
+      editModal.style.display = "block";
+
+      // Menangani tombol "Save Changes"
+      const saveChangesBtn = document.getElementById("saveChanges");
+      saveChangesBtn.addEventListener("click", () => {
+        // Mendapatkan nilai yang diedit dari elemen-elemen formulir
+        const editedTitle = editTitle.value;
+        const editedImage = editImage.value;
+        const editedDescription = editDescription.value;
+        const editedCategory = editCategory.value;
+
+        // Simpan perubahan ke Firebase Firestore
+        db.collection("posts").doc(docId).update({
+          title: editedTitle,
+          imageUrl: editedImage,
+          summary: editedDescription,
+          category: editedCategory
+        }).then(() => {
+          console.log("Document successfully updated!");
+          // Sembunyikan modal setelah perubahan disimpan
+          editModal.style.display = "none";
+        }).catch((error) => {
+          console.error("Error updating document: ", error);
+        });
+      });
+
+      // Menangani tombol "Close"
+      const closeModalBtn = document.getElementById("closeModal");
+      closeModalBtn.addEventListener("click", () => {
+        // Sembunyikan modal ketika tombol "Close" diklik
+        editModal.style.display = "none";
+      });
+    }
   </script>
 </body>
 </html>

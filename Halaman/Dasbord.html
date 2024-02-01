@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Counter Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      
+      color: black;
+      
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 0px;
+      
+    }
+
+    nav a {
+      color: black;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .visitor-info {
+      margin-bottom: 20px;
+    }
+
+    .visitor-info span {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .visitor-info label {
+      font-size: 18px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Visitor Counter Admin</h1>
+    <nav>
+      <a href="admin.html">Konten</a>
+      <a href="Dasbord.html">Dasbord</a>
+      <a href="#">Settings</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Visitor Counter</h2>
+    <div class="visitor-info">
+      <label>Total Visitors:</label>
+      <span id="visitorCount">0</span>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "blog-32ec0.firebaseapp.com",
+      projectId: "blog-32ec0",
+      storageBucket: "blog-32ec0.appspot.com",
+      messagingSenderId: "754173046040",
+      appId: "1:754173046040:web:4abee2d4246af64246826d",
+      measurementId: "G-7CBBXJXYLX"
+    };
+
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    
+
+    // Menginkremen jumlah pengunjung dan menyimpannya di Firestore
+    function incrementVisitorCount() {
+      const visitorRef = db.collection("visitors").doc("counter");
+
+      // Atomically increment the count
+      visitorRef.update({
+        count: firebase.firestore.FieldValue.increment(1)
+      });
+    }
+
+    // Cek apakah pengunjung sudah mengunjungi halaman hari ini
+    function checkDailyVisit() {
+      const visitorRef = db.collection("visitors").doc("counter");
+
+      // Cek apakah dokumen exist
+      visitorRef.get().then((doc) => {
+        if (doc.exists) {
+          const lastVisitTimestamp = doc.data().lastVisit;
+
+          // Ambil timestamp saat ini
+          const currentTimestamp = firebase.firestore.Timestamp.now().seconds;
+
+          // Konversi timestamp ke hari
+          const lastVisitDate = new Date(lastVisitTimestamp * 1000).getDate();
+          const currentDate = new Date(currentTimestamp * 1000).getDate();
+
+          // Jika pengunjung belum mengunjungi hari ini, inkremen jumlah pengunjung dan update timestamp
+          if (lastVisitDate !== currentDate) {
+            incrementVisitorCount();
+            visitorRef.update({ lastVisit: currentTimestamp });
+          }
+        } else {
+          // Jika dokumen tidak exist, tambahkan dokumen baru dan set jumlah pengunjung ke 1
+          visitorRef.set({ count: 1, lastVisit: firebase.firestore.Timestamp.now().seconds });
+        }
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      });
+    }
+
+    // Ambil jumlah pengunjung dari Firestore dan tampilkan di halaman
+    const visitorCountElement = document.getElementById("visitorCount");
+    db.collection("visitors").doc("counter").onSnapshot((doc) => {
+      const count = doc.data().count;
+      visitorCountElement.textContent = count;
+    });
+
+    // Panggil fungsi checkDailyVisit saat halaman dimuat
+    checkDailyVisit();
+  </script>
+</body>
+</html>
