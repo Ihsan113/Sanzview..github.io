@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Content</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    form {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 600px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Create Content</h1>
+  </header>
+
+  <!-- Form untuk membuat konten -->
+  <form id="contentForm">
+    <label for="title"><i class="fas fa-heading"></i> Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="image"><i class="fas fa-image"></i> Choose Image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+
+    <label for="summary"><i class="fas fa-file-alt"></i> Summary:</label>
+    <textarea id="summary" name="summary" rows="4" required></textarea>
+
+    <label for="html"><i class="fas fa-code"></i> HTML Content:</label>
+    <textarea id="html" name="html" rows="8" required></textarea>
+
+    <label for="category"><i class="fas fa-utensils"></i> Category:</label>
+    <input type="text" id="category" name="category" required>
+
+    <!-- Animasi loading -->
+    <div id="loading" style="display: none;">
+      <i class="fas fa-spinner fa-spin"></i> Saving...
+    </div>
+
+    <!-- Tombol untuk menyimpan konten -->
+    <input type="submit" value="Save Content" id="saveButton">
+  </form>
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIBSFsArwLk-iFWmWmASTTT0v7fFDBewU",
+      authDomain: "blog-32ec0.firebaseapp.com",
+      projectId: "blog-32ec0",
+      storageBucket: "blog-32ec0.appspot.com",
+      messagingSenderId: "754173046040",
+      appId: "1:754173046040:web:4abee2d4246af64246826d",
+      measurementId: "G-7CBBXJXYLX"
+    };
+
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Tangani pengiriman formulir
+    const contentForm = document.getElementById("contentForm");
+    const titleInput = document.getElementById("title");
+    const imageInput = document.getElementById("image");
+    const summaryInput = document.getElementById("summary");
+    const htmlInput = document.getElementById("html");
+    const categoryInput = document.getElementById("category");
+    const saveButton = document.getElementById("saveButton");
+    const loadingDiv = document.getElementById("loading");
+
+    contentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Tampilkan animasi loading dan sembunyikan tombol "Save Content"
+      loadingDiv.style.display = "block";
+      saveButton.style.display = "none";
+
+      const title = titleInput.value;
+      const imageFile = imageInput.files[0];
+      const summary = summaryInput.value;
+      const htmlContent = htmlInput.value;
+      const category = categoryInput.value;
+
+      // Upload file gambar ke Firebase Storage
+      const storageRef = storage.ref();
+      const imageRef = storageRef.child(imageFile.name);
+      imageRef.put(imageFile)
+        .then((snapshot) => {
+          console.log('Uploaded a blob or file!');
+          // Dapatkan URL unduhan gambar yang diunggah
+          return snapshot.ref.getDownloadURL();
+        })
+        .then((imageUrl) => {
+          // Simpan data konten ke Firestore
+          return db.collection("posts").add({
+            title: title,
+            imageUrl: imageUrl,
+            summary: summary,
+            htmlContent: htmlContent,
+            category: category
+          });
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+          alert("Content saved successfully!");
+          // Reset formulir setelah konten berhasil disimpan
+          contentForm.reset();
+          // Sembunyikan animasi loading dan tampilkan tombol "Save Content" kembali
+          loadingDiv.style.display = "none";
+          saveButton.style.display = "block";
+        })
+        .catch((error) => {
+          console.error("Error uploading image: ", error.message);
+          // Sembunyikan animasi loading dan tampilkan tombol "Save Content" kembali
+          loadingDiv.style.display = "none";
+          saveButton.style.display = "block";
+        });
+    });
+  </script>
+</body>

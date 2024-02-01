@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;      
+    }
+
+    header {
+  background-color: #111;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; /* Mengatur jarak antara elemen header */
+  align-items: center; /* Menyelaraskan elemen secara vertikal */
+  position: fixed; /* Tetapkan posisi header */
+  top: 0; /* Letakkan header di bagian atas */
+  width: 100%; /* Lebar header mengisi seluruh lebar layar */  
+  z-index: 1000; /* Atur z-index agar header tampil di atas konten */
+  width: calc(100% - 30px); /* Lebar total dikurangi dengan dua kali padding */
+}
+
+
+    header h1 {
+      margin: 0;      
+      font-size: 23px;
+      margin-left: 40px;
+      color: #55acffa5;
+    }
+
+
+    .hamburger-btn {
+      cursor: pointer;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    nav {
+      position: fixed; /* Tetapkan posisi menu agar tetap terlihat saat digeser */
+      top: 65px; /* Geser menu ke atas */
+      left: -250px; /* Sembunyikan menu di luar layar kiri */
+      width: 250px; /* Lebar menu */
+      height: calc(100%); /* Tinggi menu sesuai dengan tinggi layar dikurangi tinggi header */
+      background-color: #111; /* Warna latar belakang menu */
+      transition: left 0.3s; /* Efek transisi saat menu digeser */
+      z-index: 1000; /* Atur z-index agar menu tampil di atas konten */
+      color: white;
+    }
+    
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      height: 50%; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav ul li {
+      margin-bottom: 20px; /* Berikan jarak antara setiap item menu */
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .social-icons a {
+      color: #fff;
+      font-size: 24px;
+      margin: 0 10px; /* Jarak antara ikon media sosial */
+    }
+
+
+    img {
+      border-radius: 6px;
+    }
+
+
+
+    footer {
+      background-color: #111;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: calc(100% - 20px);
+      margin: 0 auto;
+    }
+
+    #postContent {
+      width: 95%;
+      margin: 60px auto 0; /* Adjusted top margin to avoid overlapping with header */
+      max-height: calc(100vh - 150px);
+      overflow-y: auto;
+    }
+    
+     #overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Background color with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure overlay is on top */
+}
+
+/* Styling for loader */
+.loader {
+  border: 8px solid #f3f3f3; /* White border */
+  border-top: 8px solid #3498db; /* Blue border for animation */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; /* Faster rotation */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+  </style>
+</head>
+<body>
+  <header>
+      <img src="logo.png" alt="deskripsi-gambar" width="60px" height="60px" style="position: fixed; left: 5px;  pointer-events: none;">
+    <h1>Sanzview</h1>
+    <div class="hamburger-btn" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
+    </div>
+  </header>
+  
+   <nav id="menu">
+      
+    <ul>
+         
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    
+    <br>
+    <div class="social-icons">
+<a href="https://wa.me/qr/LW7BON5NB2ESH1"</a><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.instagram.com/ihsanf4402023/"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@Ihsan_113?si=2da_oz3SrBZptV7d"><i class="fab fa-youtube"></i></a>
+      </div>
+      </ul>
+  
+  </nav>
+  <article id="postContent">
+    <!-- Post content will be displayed here -->
+  </article>
+
+<div id="overlay">
+    <div class="loader"></div>
+  </div>
+
+
+  <footer>
+    <p>&copy; 2024 Sanzview</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyBIBSFsArwLk-iFWmWmASTTT0v7fFDBewU",
+  authDomain: "blog-32ec0.firebaseapp.com",
+  projectId: "blog-32ec0",
+  storageBucket: "blog-32ec0.appspot.com",
+  messagingSenderId: "754173046040",
+  appId: "1:754173046040:web:4abee2d4246af64246826d",
+  measurementId: "G-7CBBXJXYLX"
+};
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Get the ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    // Function to render post content
+    function renderPostContent(doc) {
+      const postContent = document.getElementById("postContent");
+      const htmlContent = document.createElement("div");
+      htmlContent.innerHTML = doc.data().htmlContent;
+      
+      postContent.appendChild(htmlContent);
+    }
+
+    // Get the document with the corresponding ID and render its content
+    db.collection("posts").doc(postId).get().then((doc) => {
+      if (doc.exists) {
+        renderPostContent(doc);
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
+    
+    <!-- navigasi -->
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('menu');
+let isOpen = false;
+
+hamburgerBtn.addEventListener('click', () => {
+  // Cek status buka atau tutup
+  if (!isOpen) {
+    // Geser menu ke dalam tampilan saat tombol hamburger diklik
+    menu.style.left = '0';
+    isOpen = true;
+  } else {
+    // Geser menu keluar dari tampilan saat tombol hamburger diklik lagi
+    menu.style.left = '-250px';
+    isOpen = false;
+  }
+});
+  <!-- navigasi -->
+  
+<!-- loading -->
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('overlay').style.display = 'none';
+  }, 3000); // 3000 milliseconds = 3 seconds
+  });
+<!-- loading -->
+  </script>
+</body>
+</html>

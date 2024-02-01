@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanzview</title>  
+  <style>
+    /* CSS styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+  background-color: #111;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; /* Mengatur jarak antara elemen header */
+  align-items: center; /* Menyelaraskan elemen secara vertikal */
+  position: fixed; /* Tetapkan posisi header */
+  top: 0; /* Letakkan header di bagian atas */
+  width: 100%; /* Lebar header mengisi seluruh lebar layar */  
+  z-index: 1000; /* Atur z-index agar header tampil di atas konten */
+  width: calc(100% - 30px); /* Lebar total dikurangi dengan dua kali padding */
+}
+
+
+    header h1 {
+      margin: 0;      
+      font-size: 23px;
+      margin-left: 40px;
+      color: #55acffa5;
+    }
+
+    .hamburger-btn {
+      cursor: pointer;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    nav {
+      position: fixed; /* Tetapkan posisi menu agar tetap terlihat saat digeser */
+      top: 60px; /* Geser menu ke atas */
+      left: -250px; /* Sembunyikan menu di luar layar kiri */
+      width: 250px; /* Lebar menu */
+      height: calc(100%); /* Tinggi menu sesuai dengan tinggi layar dikurangi tinggi header */
+      background-color: #111; /* Warna latar belakang menu */
+      transition: left 0.3s; /* Efek transisi saat menu digeser */
+      z-index: 1000; /* Atur z-index agar menu tampil di atas konten */
+      color: white;
+    }
+    
+
+  .footer2 {
+    position: block;
+    bottom: 50px;    
+    
+    
+    
+}
+
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      height: 50%; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav ul li {
+      margin-bottom: 20px; /* Berikan jarak antara setiap item menu */
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .social-icons a {
+      color: #fff;
+      font-size: 24px;
+      margin: 0 10px; /* Jarak antara ikon media sosial */
+    }
+
+
+.content {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 50px; /* Jarak bawah */
+  margin-top: 20px; /* Jarak atas */
+  max-width: 1000px; /* Sesuaikan maksimum lebar konten */
+  margin: 0 auto; /* Pusatkan konten di tengah */
+}
+
+article {
+  margin-bottom: 20px; /* Tambahkan jarak antara setiap konten */
+  background-color: #f4f4f4c8;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 380px;
+  width: 100%;
+  margin-left: auto; /* Geser artikel ke kanan */
+  margin-right: auto; /* Geser artikel ke kiri */
+}
+
+
+
+    article h2 {
+      margin-top: 0;
+       
+    }
+
+    article img {
+      max-width: 100%;
+      width: 100%;
+      height: 200px; /* Atur tinggi gambar menjadi 50% dari lebar konten artikel */
+      border-radius: 5px;
+    }
+
+    article p {
+      margin-bottom: 20px;
+    }
+
+    article a {
+      color: white;
+      text-decoration: none;
+      background-color: #040404;
+      padding: 5px 10px;
+      border-radius: 3px;
+      display: inline-block;      
+    }
+
+    article a:hover {
+      background-color: #ddd;
+    }
+
+    footer {
+  background-color: #111;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  display: block; /* Mengatur footer sebagai blok */
+  width: calc(100% - 20px); /* Lebar total dikurangi dengan dua kali padding */
+  margin: 0 auto;
+}
+
+
+    footer ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    footer ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    footer ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    
+    .search-container {      
+      justify-content: center;
+      margin-top: 68px;
+      
+    }
+
+   
+    .search-container input[type=text] {
+      padding: 13px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      margin: 0 auto;
+      margin-top: 40px;
+    }
+
+    
+    .search-container button {
+      padding: 12px 10px;
+      background-color: #1f1f1f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+   
+    .search-container button:hover {
+      background-color: #f7f7f7;
+      color: black;
+      
+    }
+
+    
+    .search-container:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .search-results {
+      text-align: left;
+      padding: 10px;
+      margin-top: 20px;
+    }
+
+  .search-results a {
+  display: block;
+  margin-bottom: -20px;
+  padding: 5px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+    .search-results a:hover {
+      text-decoration: underline;
+    }
+    
+
+
+
+.title-link-container {
+  display: flex;
+  align-items: center;
+}
+
+.title-link-container a {
+  text-indent: ; /* Menyembunyikan teks secara visual */
+  padding: 10px; /* Menambahkan ruang di sekitar teks tautan */
+  display: inline-block; /* Membuat tautan menjadi elemen blok untuk mengaktifkan padding */
+  vertical-align: middle; /* Menyesuaikan posisi vertikal tautan dengan teks judul */
+  
+}
+
+
+ #overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Background color with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure overlay is on top */
+}
+
+/* Styling for loader */
+.loader {
+  border: 8px solid #f3f3f3; /* White border */
+  border-top: 8px solid #3498db; /* Blue border for animation */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; /* Faster rotation */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+#categoryButtons {
+width: 100%;
+  position: fixed; /* Tetapkan posisi tombol kategori */
+  top: 60px; /* Geser ke bawah sejauh 70px dari atas */
+  left: 50%; /* Letakkan di tengah horizontal */
+  transform: translateX(-50%); /* Geser ke kiri sejauh setengah dari lebar tombol */
+  z-index: 1000; /* Atur z-index agar tombol muncul di atas konten */
+  background-color: #111; /* Warna latar belakang */
+  padding: 2px; /* Padding untuk memperbesar area klik */
+  border-radius: 5px; /* Tambahkan border radius */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Efek bayangan untuk memberikan efek ketinggian */
+  display: flex; /* Menjadikan konten anak tersusun secara horizontal */
+  justify-content: center; /* Menyusun konten anak di tengah horizontal */
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+#categoryButtons button {
+  background-color: #272727; /* Warna latar belakang tombol */
+  color: white; /* Warna teks */
+  border: none; /* Hapus border */
+  padding: 10px 10px; /* Padding untuk memperbesar area klik */
+  cursor: pointer; /* Ganti kursor saat di atas tombol */
+  border-radius: 5px; /* Tambahkan border radius */
+  transition: background-color 0.3s; /* Efek transisi saat tombol berubah warna */
+  margin: 0 5px; /* Berikan jarak antara tombol */
+  margin-bottom: 5px;
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+#categoryButtons button:hover {
+  background-color: #f4f4f4e9; /* Warna latar belakang saat tombol dihover */
+  color: black;
+}
+
+
+.closeButton {
+  position: absolute; /* Tetapkan posisi absolut untuk tombol close */
+  top: 22.5%; /* Geser ke atas sejauh 10px */
+  right: 50%; /* Geser ke kanan sejauh 10px */
+  background-color: transparent; /* Warna latar belakang transparan */
+  color: #555; /* Warna teks */
+  border: none; /* Hapus border */
+  font-size: 35px; /* Ukuran font */
+  cursor: pointer; /* Ganti kursor saat di atas tombol */
+  padding: 0; /* Hapus padding */
+  margin: 0; /* Hapus margin */
+  line-height: 1; /* Setel line height */
+}
+
+.closeButton:hover {
+  color: #000; /* Warna teks saat tombol dihover */
+}
+
+/* Style the button */
+.scroll-to-top {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  width: 40px;
+  height: 40px;
+  right: 20px;
+  z-index: 99;
+  font-size: 21px;
+  border: none;
+  outline: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;   
+}
+
+
+
+</style>
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Halaman/logo.png" alt="deskripsi-gambar" width="60px" height="60px" style="position: fixed; left: 5px;  pointer-events: none;">
+    <h1>Sanzview</h1>
+    <div class="hamburger-btn" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
+    </div>  
+    
+    <div id="categoryButtons">
+    <button id="gameCategory">Game</button>
+    <button id="beritaCategory">Berita</button>
+     <button id="kesehatanCategory">Kesehatan</button>
+      <button id="makananCategory">makanan</button>
+       <button id="pendidikanCategory">pendidikan</button>
+        <button id="tradingCategory">tranding</button>
+  </div>   
+  
+  </header>
+  
+ 
+  
+ 
+
+
+   <nav id="menu">
+      
+    <ul>
+         
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Halaman/about.html">About</a></li>
+      <li><a href="Halaman/contacts.html">Contact</a></li>
+    
+    <br>
+    <div class="social-icons">
+<a href="https://wa.me/qr/LW7BON5NB2ESH1"</a><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.instagram.com/ihsanf4402023/"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@Ihsan_113?si=2da_oz3SrBZptV7d"><i class="fab fa-youtube"></i></a>
+      </div>
+      </ul>
+    
+    <center>
+    <div class="footer2"> 
+    <p>&copy; 2024 Sanzview</p>
+  </div>
+  </center>
+  </nav>
+  
+  
+  <center>
+    <div class="search-container">
+      <form id="searchForm"> 
+        <input type="text" id="searchInput" placeholder="Search..."> 
+        <button type="submit"><i class="fas fa-search"></i> Search</button>
+        <button type="button" id="clearButton">×</button>
+      </form> 
+      <div class="search-results" id="searchResults">
+    <!-- Search results will be displayed here -->
+  </div>
+    </div>
+  </center>
+
+<div id="overlay">
+    <div class="loader"></div>
+  </div>
+
+
+
+  
+  <section class="content" id="blogPosts">
+    <!-- Blog posts will be dynamically added here -->
+  </section>
+
+
+
+<button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">&#8679;</button> 
+  <footer>
+    <ul>
+      <li><a href="Halaman/sitemap.html">Sitemap</a></li>
+      <li><a href="Halaman/disclaimer.html">Disclaimer</a></li>
+      <li><a href="Halaman/privacypolicy.html">Privacy Policy</a></li>
+    </ul>
+    <p>&copy; 2024 Sanzview</p>
+  </footer>
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+ <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBIBSFsArwLk-iFWmWmASTTT0v7fFDBewU",
+  authDomain: "blog-32ec0.firebaseapp.com",
+  projectId: "blog-32ec0",
+  storageBucket: "blog-32ec0.appspot.com",
+  messagingSenderId: "754173046040",
+  appId: "1:754173046040:web:4abee2d4246af64246826d",
+  measurementId: "G-7CBBXJXYLX"
+};
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Reference to the blog posts section
+  const blogPostsSection = document.getElementById("blogPosts");
+  // Reference to the search results section
+  const searchResultsSection = document.getElementById("searchResults");
+
+  // Function to render blog posts
+  function renderBlogPosts() {
+    db.collection("posts").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc, index) => { // Menambahkan parameter index
+        const data = doc.data();
+        const article = document.createElement("article");
+        const articleId = `post-${index}`; // Membuat id unik untuk setiap artikel
+        article.id = articleId; // Menetapkan id ke artikel
+        article.innerHTML = `
+          <h2>${data.title}</h2>
+          <img src="${data.imageUrl}" alt="Post Image">
+          <p>${data.summary}</p>
+          <a href="Halaman/post.html?id=${doc.id}">Baca Lengkap</a>
+         <label><strong>Category:</strong> ${data.category}</label>
+        `;
+        blogPostsSection.appendChild(article);
+      });
+    });
+  }
+
+  // Call the function to render blog posts
+  renderBlogPosts();
+
+// Search form event listener
+  const searchForm = document.getElementById("searchForm");
+  const clearButton = document.getElementById("clearButton"); // Mengambil tombol clear
+
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const articles = document.querySelectorAll("article");
+    const searchResults = [];
+    articles.forEach((article) => {
+      const titleElement = article.querySelector("h2");
+      const title = titleElement.textContent.toLowerCase();
+      if (title.includes(searchInput)) {
+        article.style.display = "block";
+        const updatedHTML = `
+          <div class="title-link-container">
+            <h4><a href="${article.querySelector("a").href}">${titleElement.textContent}</a></h4>
+          </div>
+        `;
+        searchResults.push(updatedHTML);
+      } else {
+        article.style.display = "none";
+      }
+    });
+    renderSearchResults(searchResults);
+  });
+
+  // Function to render search results
+  function renderSearchResults(results) {
+    const searchResultsDiv = document.getElementById("searchResults");
+    searchResultsDiv.innerHTML = results.join("");
+  }
+
+  // Event listener for clear button
+  clearButton.addEventListener("click", () => {
+    document.getElementById("searchInput").value = ""; // Mengosongkan input
+    const articles = document.querySelectorAll("article");
+    articles.forEach((article) => {
+      article.style.display = "block"; // Menampilkan semua artikel kembali
+    });
+    document.getElementById("searchResults").innerHTML = ""; // Menghapus hasil pencarian
+  });
+
+  // Function to render search results
+  function renderSearchResults(results) {
+    searchResultsSection.innerHTML = "";
+    if (results.length === 0) {
+      const noResultsMessage = document.createElement("p");
+      noResultsMessage.textContent = "No results found.";
+      searchResultsSection.appendChild(noResultsMessage);
+    } else {
+      results.forEach((result) => {
+        // Memasukkan HTML artikel yang diperbarui langsung ke dalam search results section
+        searchResultsSection.innerHTML += result;
+      });
+    }
+  }
+
+  // Function to render content based on category
+function renderCategoryContent(category) {
+  // Kosongkan section konten terlebih dahulu
+  blogPostsSection.innerHTML = "";
+
+  // Tambahkan tombol close
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "×"; // Teks tombol close
+  closeButton.classList.add("closeButton"); // Tambahkan kelas untuk styling CSS
+  closeButton.addEventListener("click", () => {
+    // Hapus tampilan kategori saat tombol close ditekan
+    blogPostsSection.innerHTML = "";
+    // Refresh halaman
+    location.reload();
+  });
+  blogPostsSection.appendChild(closeButton); // Tambahkan tombol close ke dalam section konten
+
+  // Ambil konten dari Firestore berdasarkan kategori yang dipilih
+  db.collection("posts").where("category", "==", category).get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const article = document.createElement("article");
+      article.innerHTML = `
+        <h2>${data.title}</h2>
+        <img src="${data.imageUrl}" alt="Post Image">
+        <p>${data.summary}</p>
+        <a href="Halaman/post.html?id=${doc.id}">Baca Lengkap</a>
+        <label><strong>Category:</strong> ${data.category}</label>
+      `;
+      blogPostsSection.appendChild(article);
+    });
+  });
+}
+
+
+// Ambil tombol kategori
+const gameCategoryButton = document.getElementById("gameCategory");
+const beritaCategoryButton = document.getElementById("beritaCategory");
+const tradingCategoryButton = document.getElementById("tradingCategory");
+const kesehatanCategoryButton = document.getElementById("kesehatanCategory");
+const makananCategoryButton = document.getElementById("makananCategory");
+const pendidikanCategoryButton =
+document.getElementById("pendidikanCategory");
+
+// Tambahkan event listener untuk masing-masing tombol
+gameCategoryButton.addEventListener("click", () => {
+  renderCategoryContent("game");
+});
+
+beritaCategoryButton.addEventListener("click", () => {
+  renderCategoryContent("berita");
+});
+
+tradingCategoryButton.addEventListener("click", () => {
+  renderCategoryContent("trading");
+});
+
+kesehatanCategoryButton.addEventListener("click", () => {
+  renderCategoryContent("kesehatan");
+});
+
+makananCategoryButton.addEventListener("click", () => {
+  renderCategoryContent("makanan");
+});
+
+pendidikanCategoryButton.addEventListener("click", () => {
+  renderCategoryContent("pendidikan");
+});
+
+  <!-- navigasi -->
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('menu');
+let isOpen = false;
+
+hamburgerBtn.addEventListener('click', () => {
+  // Cek status buka atau tutup
+  if (!isOpen) {
+    // Geser menu ke dalam tampilan saat tombol hamburger diklik
+    menu.style.left = '0';
+    isOpen = true;
+  } else {
+    // Geser menu keluar dari tampilan saat tombol hamburger diklik lagi
+    menu.style.left = '-250px';
+    isOpen = false;
+  }
+});
+
+  <!-- navigasi -->
+
+  <!-- loading -->
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('overlay').style.display = 'none';
+    }, 3000); // 3000 milliseconds = 3 seconds
+  });
+  <!-- loading -->
+  
+  <!-- scroll -->
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("scrollToTopBtn").style.display = "block";
+  } else {
+    document.getElementById("scrollToTopBtn").style.display = "none";
+  }
+}
+
+
+function scrollToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+<!-- scroll -->
+</script>
+
+</body>
+</html>

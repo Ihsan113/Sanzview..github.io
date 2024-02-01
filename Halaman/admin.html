@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .content-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .content-item img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+
+    .delete-button {
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Panel - Manage Content</h1>
+  </header>
+
+  <div id="contentList">
+    <!-- Daftar konten akan ditampilkan di sini -->
+  </div>
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIBSFsArwLk-iFWmWmASTTT0v7fFDBewU",
+      authDomain: "blog-32ec0.firebaseapp.com",
+      projectId: "blog-32ec0",
+      storageBucket: "blog-32ec0.appspot.com",
+      messagingSenderId: "754173046040",
+      appId: "1:754173046040:web:4abee2d4246af64246826d",
+      measurementId: "G-7CBBXJXYLX"
+    };
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Ambil semua konten dari Firestore
+    const contentList = document.getElementById("contentList");
+
+    db.collection("posts").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const contentItem = document.createElement("div");
+        contentItem.classList.add("content-item");
+
+        const title = document.createElement("h2");
+        title.textContent = data.title;
+
+        const image = document.createElement("img");
+        image.src = data.imageUrl;
+        image.alt = data.title;
+
+        const summary = document.createElement("p");
+        summary.textContent = data.summary;
+
+        const category = document.createElement("p");
+        category.textContent = "Category: " + data.category;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add("delete-button");
+        deleteButton.addEventListener("click", () => {
+          // Hapus konten dari Firestore
+          db.collection("posts").doc(doc.id).delete().then(() => {
+            console.log("Document successfully deleted!");
+            // Hapus gambar dari Firebase Storage
+            const storageRef = storage.refFromURL(data.imageUrl);
+            storageRef.delete().then(() => {
+              console.log("Image successfully deleted!");
+              // Hapus konten dari tampilan
+              contentItem.remove();
+            }).catch((error) => {
+              console.error("Error deleting image: ", error);
+            });
+          }).catch((error) => {
+            console.error("Error deleting document: ", error);
+          });
+        });
+
+        contentItem.appendChild(title);
+        contentItem.appendChild(image);
+        contentItem.appendChild(summary);
+        contentItem.appendChild(category);
+        contentItem.appendChild(deleteButton);
+
+        contentList.appendChild(contentItem);
+      });
+    });
+  </script>
+</body>
+</html>

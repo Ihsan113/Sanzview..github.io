@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotact</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background-color: #111;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            width: calc(100% - 30px);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 23px;
+            margin-left: 40px;
+            color: #55acffa5;
+        }
+
+        .hamburger-btn {
+            cursor: pointer;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        nav {
+            position: fixed;
+            top: 65px;
+            left: -250px;
+            width: 250px;
+            height: calc(100%);
+            background-color: #111;
+            transition: left 0.3s;
+            z-index: 1000;
+            color: white;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-bottom: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+
+        img {
+            border-radius: 6px;
+        }
+
+        footer {
+            background-color: #111;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 20px);
+            margin: 0 auto;
+        }
+
+        #postContent {
+            margin-top: 60px;
+            padding: 20px;
+            padding-bottom: 70px;
+            position: sticky;
+            top: 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .floating-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="deskripsi-gambar" width="60px" height="60px" style="position: fixed; left: 5px;  pointer-events: none;">
+        <h1>Sanzview</h1>
+        <div class="hamburger-btn" id="hamburgerBtn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    
+    <nav id="menu">
+        <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contacts.html">Contact</a></li>
+            <br>
+             <div class="social-icons">
+<a href="https://wa.me/qr/LW7BON5NB2ESH1"</a><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.instagram.com/ihsanf4402023/"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@Ihsan_113?si=2da_oz3SrBZptV7d"><i class="fab fa-youtube"></i></a>
+      </div>
+        </ul>
+        
+        <br>
+       
+    </nav>
+
+    <article id="postContent">
+        <div>
+            <h2>Contact Sanzview</h2>
+            <p>Jika Anda memiliki pertanyaan, masukan, atau kerjasama, jangan ragu untuk menghubungi kami.</p>
+            <p>Email: ihsanfuwadi@gmail.com</p>
+            <p>Telepon: +6283174042483</p>
+            <p>Silakan hubungi kami melalui salah satu cara di atas, atau isi formulir di bawah ini:</p>
+            <form id="contactForm">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Pesan:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <input type="submit" value="Kirim">
+            </form>
+        </div>
+    </article>
+
+    <footer>
+        <p>&copy; 2024 Sanzview</p>
+    </footer>
+
+    <div id="floatingMessage" class="floating-message"></div>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('menu');
+let isOpen = false;
+
+hamburgerBtn.addEventListener('click', () => {
+    if (!isOpen) {
+        menu.style.left = '0';
+        isOpen = true;
+    } else {
+        menu.style.left = '-250px';
+        isOpen = false;
+    }
+});
+
+emailjs.init("m_cJTc3CBeWJutcZS");
+
+function sendContactForm(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const form = document.getElementById('contactForm');
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    emailjs.send("service_k5d9xd7", "template_i7ittgf", {
+        from_name: name,
+        from_email: email,
+        message: message
+    }).then(function(response) {
+        showMessage('success', 'Pesan telah berhasil dikirim.');
+        form.reset();
+    }, function(error) {
+        showMessage('error', 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.');
+    });
+
+    return false;
+}
+
+
+document.getElementById('contactForm').addEventListener('submit', sendContactForm);
+
+function showMessage(type, message) {
+    const floatingMessage = document.getElementById('floatingMessage');
+    floatingMessage.textContent = message;
+    floatingMessage.classList.add(type + '-message');
+    setTimeout(() => {
+        floatingMessage.textContent = '';
+        floatingMessage.classList.remove(type + '-message');
+    }, 3000);
+}
+
+    </script>
+</body>
+</html>
