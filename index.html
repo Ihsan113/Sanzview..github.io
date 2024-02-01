@@ -3,28 +3,8 @@
 <head>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
    
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.js" defer></script>
-    <script>
-        window.OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-            OneSignal.init({
-                appId: "2728f2fc-a363-480f-9e35-87a2371ef1fe", // Ganti dengan appId Anda
-                safari_web_id: "web.onesignal.auto.343b4a3c-3de6-4f02-a7bc-50b6f2b399ae", // Optional for Safari
-                notifyButton: {
-                    enable: false, // Menonaktifkan tombol bawaan OneSignal
-                },
-            });
-
-            OneSignal.on('notificationPermissionChange', function(permissionChange) {
-                var currentPermission = permissionChange.to;
-                if (currentPermission === 'default') {
-                    document.getElementById('subscribeBtn').classList.remove('subscribed');
-                } else {
-                    document.getElementById('subscribeBtn').classList.add('subscribed');
-                }
-            });
-        });
-    </script>
+   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script> <script> window.OneSignalDeferred = window.OneSignalDeferred || []; OneSignalDeferred.push(function(OneSignal) { OneSignal.init({ appId: "2728f2fc-a363-480f-9e35-87a2371ef1fe", safari_web_id: "web.onesignal.auto.2b467c5d-2ccd-4e09-a57b-cb7ab9efd0c0", notifyButton: { enable: true, }, }); }); </script>
+   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
