@@ -13,6 +13,6 @@ Selamat datang di Sanzview, tempatnya untuk eksplorasi dan pengetahuan yang mena
 
 ### Kunjungi Situs Kami
 
-Jangan ragu untuk mengunjungi [Sanzview.github.io](https://sanzview.github.io) untuk lebih jauh lagi!
+Jangan ragu untuk mengunjungi [Sanzview.github.io](https://sanzview.vercel.app/) untuk lebih jauh lagi!
 
 ![Sanzview Logo](https://example.com/logo.png)
