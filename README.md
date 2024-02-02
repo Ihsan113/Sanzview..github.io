@@ -15,4 +15,5 @@ Selamat datang di Sanzview, tempatnya untuk eksplorasi dan pengetahuan yang mena
 
 Jangan ragu untuk mengunjungi [Sanzview.github.io](https://sanzview.vercel.app/) untuk lebih jauh lagi!
 
-![Sanzview Logo](https://example.com/logo.png)
+<!-- Animasi -->
+<iframe src="https://giphy.com/embed/l0IyakQbI4Fj7NTGo" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/motion-graphics-graphic-design-animation-l0IyakQbI4Fj7NTGo">via GIPHY</a></p>
