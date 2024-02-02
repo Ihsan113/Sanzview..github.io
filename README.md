@@ -1,3 +1,4 @@
+Bisa buat tampilan nya lebih menarik lagi tanpa logo dan ada animasi nya
 # Sanzview.github.io
 
 ## Selamat Datang di Sanzview!
@@ -14,6 +15,3 @@ Selamat datang di Sanzview, tempatnya untuk eksplorasi dan pengetahuan yang mena
 ### Kunjungi Situs Kami
 
 Jangan ragu untuk mengunjungi [Sanzview.github.io](https://sanzview.vercel.app/) untuk lebih jauh lagi!
-
-<!-- Animasi -->
-<iframe src="https://giphy.com/embed/l0IyakQbI4Fj7NTGo" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/motion-graphics-graphic-design-animation-l0IyakQbI4Fj7NTGo">via GIPHY</a></p>
