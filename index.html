@@ -128,7 +128,7 @@
 
 article {
   margin-bottom: 20px; /* Tambahkan jarak antara setiap konten */
-  background-color: #f4f4f4c8;
+  background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -177,8 +177,9 @@ article {
   color: #fff;
   padding: 10px;
   text-align: center;
-  display: block; /* Mengatur footer sebagai blok */
-  width: calc(100% - 20px); /* Lebar total dikurangi dengan dua kali padding */
+  position: block;
+  bottom: 0; 
+  width: auto;   
   margin: 0 auto;
 }
 
@@ -343,6 +344,43 @@ article {
   color: black;
 }
 
+/* laptop ukuran*/
+@media only screen and (min-width: 768px) {
+  #categoryButtons {
+    width: 100%;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #111;
+    padding: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center; /* Mengubah ke tengah secara horizontal */
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  #categoryButtons button {
+    background-color: #272727;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin: 0 5px;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+  }
+
+  #categoryButtons button:hover {
+    background-color: #f4f4f4e9;
+    color: black;
+  }
+}
+/* laptop ukuran*/
 
 
 .closeButton {
@@ -445,6 +483,64 @@ article {
 }
 
 
+
+.info {
+  width: 78%;
+  max-width: 350px;
+  padding: 20px;
+  border: 1px solid #888888b3;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin: auto; /* Menengahkan secara horizontal */
+  top: 75px;
+  transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  margin-bottom: 25px;
+}
+
+
+.info:hover {
+  box-shadow: 0 8px 16px rgba(255, 165, 0, 0.2);
+  background-color: #1c1c1cf2;
+}
+
+.info p, h3 {
+  margin: 0;
+  line-height: 1.5;
+  color: white;
+  text-align: center;
+}
+
+
+
+.iconinf {
+    text-align: center;
+}
+
+.fas.fa-lightbulb {
+    color: #165883a3;
+    font-size: 80px;
+}
+
+.fas.fa-rocket{
+    color: #830500a3;
+    font-size: 80px;
+}
+
+.fas.fa-crown{
+    color: #836c37a3;
+    font-size: 80px;
+}
+
+.fas.fa-lock{
+    color: #008338a3;
+    font-size: 80px;
+}
+
+.Seputar #a1 {
+    color: black
+    
+}
 </style>
 
 
@@ -466,8 +562,10 @@ article {
       <i class="fas fa-bars"></i>
     </div>  
     
-    
+   
     <div id="categoryButtons">
+        
+         
     <button id="gameCategory">Game</button>
     <button id="beritaCategory">Berita</button>
      <button id="kesehatanCategory">Kesehatan</button>
@@ -477,6 +575,7 @@ article {
          <button id="teknologiCategory">teknologi</button>
   </div>   
   
+ 
   </header>
   
  <div id="floatingAlert" class="floating-alert">
@@ -540,7 +639,74 @@ article {
       <!-- Pengunjung tidak ditampilkan -->
     </div>
 
+<hr style="border: none; width: 100%; height: 8px; background: linear-gradient(to right, transparent, #ffcc00, transparent); margin: 10px 0 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+
+ <div class="Seputar">
+    
+  <h3 id="a1"> Semua yang Anda butuhkan untuk pengalaman membaca.</h3>
+ 
+  <br>
+  
+  <div class="info">
+       <h3>Sesuaikan iklan</h3>
+       <br>
+ <div class="iconinf">
+    <i class="fas fa-lightbulb"></i>
+</div>
+
+ <br>
+<p>
+   Memastikan untuk tidak ada iklan yang menggangu.</p>
+</div>
+
+  
+ <div class="info">
+    <h3>Fitur untuk membaca</h3>
+     <br>
+    <div class="iconinf">
+        <i class="fas fa-rocket"></i> <!-- Contoh ikon "rocket" -->
+    </div>
+    <br>
+    <p>        
+Menyediakan fitur tambahan yang dapat berguna saat membaca.
+    </p>
+</div>
+
+  
+ <div class="info">
+    <h3>Seperti Bos</h3>
+    <br>
+    <div class="iconinf">
+        <i class="fas fa-crown"></i> <!-- Ikon mahkota -->
+    </div>
+    <br>
+    <p>
+        Kebebasan untuk menyesuaikan tema dan penyesuaian tambahan
+    </p>
+</div>
+
+
+  
+ <div class="info">
+    <h3>Menghormati privasi</h3>
+    <br>
+    <div class="iconinf">
+        <i class="fas fa-lock"></i> <!-- Ikon gembok -->
+    </div>
+    <br>
+    <p>
+        Mengontrol pengaturan ponsel secara mandiri
+    </p>
+</div>
+
+</div>
+
 <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">&#8679;</button> 
+
+<center>
+<img src="https://i.ibb.co/fnRBW2j/Reading-book-rafiki.png" alt="Shopping Bag" width="350" height="350" style="max-width: 350px">
+      </center>
+
   <footer>
     <ul>
       <li><a href="Halaman/sitemap.html">Sitemap</a></li>
@@ -599,48 +765,55 @@ const firebaseConfig = {
   renderBlogPosts();
 
 // Search form event listener
-  const searchForm = document.getElementById("searchForm");
-  const clearButton = document.getElementById("clearButton"); // Mengambil tombol clear
+const searchForm = document.getElementById("searchForm");
+const clearButton = document.getElementById("clearButton"); // Mengambil tombol clear
 
-  searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+searchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    const searchInput = document.getElementById("searchInput").value.toLowerCase();
-    const articles = document.querySelectorAll("article");
-    const searchResults = [];
-    articles.forEach((article) => {
-      const titleElement = article.querySelector("h2");
-      const title = titleElement.textContent.toLowerCase();
-      if (title.includes(searchInput)) {
-        article.style.display = "block";
-        const updatedHTML = `
-          <div class="title-link-container">
-            <h4><a href="${article.querySelector("a").href}">${titleElement.textContent}</a></h4>
-          </div>
-        `;
-        searchResults.push(updatedHTML);
-      } else {
-        article.style.display = "none";
-      }
-    });
+  const searchInput = document.getElementById("searchInput").value.toLowerCase();
+  const articles = document.querySelectorAll("article");
+  const searchResults = [];
+  let foundResults = false; // Menambahkan variabel untuk menandai apakah hasil pencarian ditemukan
+  articles.forEach((article) => {
+    const titleElement = article.querySelector("h2");
+    const title = titleElement.textContent.toLowerCase();
+    if (title.includes(searchInput)) {
+      article.style.display = "block";
+      const updatedHTML = `
+        <div class="title-link-container">
+          <h4><a href="${article.querySelector("a").href}">${titleElement.textContent}</a></h4>
+        </div>
+      `;
+      searchResults.push(updatedHTML);
+      foundResults = true; // Menandai bahwa hasil pencarian ditemukan
+    } else {
+      article.style.display = "none";
+    }
+  });
+  if (!foundResults) { // Jika tidak ada hasil pencarian yang ditemukan
+    window.location.href = "Halaman/404.html"; // Arahkan ke halaman 404.html
+  } else {
     renderSearchResults(searchResults);
-  });
-
-  // Function to render search results
-  function renderSearchResults(results) {
-    const searchResultsDiv = document.getElementById("searchResults");
-    searchResultsDiv.innerHTML = results.join("");
   }
+});
 
-  // Event listener for clear button
-  clearButton.addEventListener("click", () => {
-    document.getElementById("searchInput").value = ""; // Mengosongkan input
-    const articles = document.querySelectorAll("article");
-    articles.forEach((article) => {
-      article.style.display = "block"; // Menampilkan semua artikel kembali
-    });
-    document.getElementById("searchResults").innerHTML = ""; // Menghapus hasil pencarian
+// Function to render search results
+function renderSearchResults(results) {
+  const searchResultsDiv = document.getElementById("searchResults");
+  searchResultsDiv.innerHTML = results.join("");
+}
+
+// Event listener for clear button
+clearButton.addEventListener("click", () => {
+  document.getElementById("searchInput").value = ""; // Mengosongkan input
+  const articles = document.querySelectorAll("article");
+  articles.forEach((article) => {
+    article.style.display = "block"; // Menampilkan semua artikel kembali
   });
+  document.getElementById("searchResults").innerHTML = ""; // Menghapus hasil pencarian
+});
+
 
   // Function to render search results
   function renderSearchResults(results) {
@@ -850,8 +1023,6 @@ function scrollToTop() {
   document.getElementById("closeAlertBtn").addEventListener("click", function() {
     document.getElementById("floatingAlert").style.display = "none";
   });
-
-
 
 
 </script>
