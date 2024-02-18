@@ -135,10 +135,35 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+#floatingButton {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 1000;
+}
+
+#readModeButton {
+  background-color: #000000cf;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#readModeButton:hover {
+  background-color: #0056b3;
+}
+
   </style>
 </head>
 <body>
   <header>
+ 
       <img src="logo.png" alt="deskripsi-gambar" width="60px" height="60px" style="position: fixed; left: 5px;  pointer-events: none;">
     <h1>Sanzview</h1>
     <div class="hamburger-btn" id="hamburgerBtn">
@@ -151,8 +176,8 @@
     <ul>
          
       <li><a href="/index.html">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contacts.html">Contact</a></li>
     
     <br>
     <div class="social-icons">
@@ -171,6 +196,12 @@
     <div class="loader"></div>
   </div>
 
+<!-- fitur -->
+<div id="floatingButton">
+  <button id="readModeButton"><i class="fas fa-book-open"></i></button>
+</div>
+
+<!-- fitur -->
 
   <footer>
     <p>&copy; 2024 Sanzview</p>
@@ -244,6 +275,26 @@ window.addEventListener('load', () => {
   }, 3000); // 3000 milliseconds = 3 seconds
   });
 <!-- loading -->
+
+<!-- fitur -->
+// JavaScript
+let isReadMode = false;
+
+document.getElementById("readModeButton").addEventListener("click", function() {
+  if (!isReadMode) {
+    // Mode baca aktif, ubah tampilan
+    document.body.style.backgroundColor = "#fff4d5ba"; // Warna latar belakang saat mode baca
+    // Tambahkan penyesuaian lainnya sesuai kebutuhan
+    isReadMode = true;
+  } else {
+    // Kembali ke mode normal
+    document.body.style.backgroundColor = "#ffffff"; // Warna latar belakang normal
+    // Tambahkan penyesuaian lainnya sesuai kebutuhan
+    isReadMode = false;
+  }
+});
+
+<!-- fitur -->
   </script>
 </body>
 </html>
