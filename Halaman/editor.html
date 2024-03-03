@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Content</title>
@@ -39,7 +39,8 @@
 
     input[type="text"],
     input[type="file"],
-    textarea {
+    textarea,
+    select { /* Added select */
       width: 100%;
       padding: 10px;
       margin-bottom: 20px;
@@ -79,7 +80,18 @@
     <textarea id="html" name="html" rows="8" required></textarea>
 
     <label for="category"><i class="fas fa-utensils"></i> Category:</label>
-    <input type="text" id="category" name="category" required>
+    <select id="category" name="category" required> <!-- Changed input type to select -->
+      <option value="" disabled selected>Select category</option>
+      <option value="game">Game</option>
+      <option value="kesehatan">Kesehatan</option>
+      <option value="teknologi">Teknologi</option>
+        <option value="makanan">Makanan</option>
+      <option value="pendidikan">Pendidikan</option>
+      <option value="trading">Trading</option>
+       <option value="berita">Berita</option>
+      
+      <!-- Add more options as needed -->
+    </select>
 
     <!-- Animasi loading -->
     <div id="loading" style="display: none;">
@@ -171,3 +183,4 @@
     });
   </script>
 </body>
+</html>

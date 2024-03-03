@@ -6,158 +6,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  position: relative; /* Tambahkan properti ini */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
-
-
-
-    header {
-  background-color: #111;
-  color: #fff;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between; /* Mengatur jarak antara elemen header */
-  align-items: center; /* Menyelaraskan elemen secara vertikal */
-  position: fixed; /* Tetapkan posisi header */
-  top: 0; /* Letakkan header di bagian atas */
-  width: 100%; /* Lebar header mengisi seluruh lebar layar */  
-  z-index: 1000; /* Atur z-index agar header tampil di atas konten */
-  width: calc(100% - 30px); /* Lebar total dikurangi dengan dua kali padding */
+header {
+    background-color: #111;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    width: calc(100% - 30px);
 }
 
+header h1 {
+    margin: 0;
+    font-size: 23px;
+    margin-left: 40px;
+    color: #55acffa5;
+}
 
-    header h1 {
-      margin: 0;      
-      font-size: 23px;
-      margin-left: 40px;
-      color: #55acffa5;
-    }
+.hamburger-btn {
+    cursor: pointer;
+    font-size: 24px;
+    margin-right: 10px;
+}
 
+nav {
+    position: fixed;
+    top: 65px;
+    left: -250px;
+    width: 250px;
+    height: calc(100% - 65px); /* Change height calculation */
+    background-color: #111;
+    transition: left 0.3s;
+    z-index: 1000;
+    color: white;
+}
 
-    .hamburger-btn {
-      cursor: pointer;
-      font-size: 24px;
-      margin-right: 10px;
-    }
-
-    nav {
-      position: fixed; /* Tetapkan posisi menu agar tetap terlihat saat digeser */
-      top: 65px; /* Geser menu ke atas */
-      left: -250px; /* Sembunyikan menu di luar layar kiri */
-      width: 250px; /* Lebar menu */
-      height: calc(100%); /* Tinggi menu sesuai dengan tinggi layar dikurangi tinggi header */
-      background-color: #111; /* Warna latar belakang menu */
-      transition: left 0.3s; /* Efek transisi saat menu digeser */
-      z-index: 1000; /* Atur z-index agar menu tampil di atas konten */
-      color: white;
-    }
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
     
-
-    nav ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      height: 50%; 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    nav ul li {
-      margin-bottom: 20px; /* Berikan jarak antara setiap item menu */
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 18px;
-    }
-    .social-icons a {
-      color: #fff;
-      font-size: 24px;
-      margin: 0 10px; /* Jarak antara ikon media sosial */
-    }
-
-
-    img {
-      border-radius: 6px;
-    }
-
-
-
-    footer {
-  background-color: #111;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-  /* Hapus properti position: fixed; */
-  bottom: 0;
-  width: calc(100% - 20px);
-  margin: 20px auto 0; /* Ubah margin-top menjadi margin-bottom */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50%; /* Change height to 100% */
 }
 
-    #postContent {
-      width: 95%;
-      margin: 60px auto 0; /* Adjusted top margin to avoid overlapping with header */
-      max-height: calc(100vh - 150px);
-      overflow-y: auto;
-    }
+nav ul li {
+    margin-bottom: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 24px;
+    margin: 0 10px;
+}
+
+img {
+    border-radius: 6px;
+}
+
+footer {
+    background-color: #111;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%; /* Ubah lebar menjadi 100% */
+    margin: 0 auto; /* Hapus margin */
     
-     #overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Background color with opacity */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999; /* Ensure overlay is on top */
 }
 
-/* Styling for loader */
+
+#postContent {
+    width: 95%;
+    margin: 120px auto 0; /* Adjusted top margin */
+    max-height: calc(100vh - 190px); /* Adjusted height calculation */
+    overflow-y: auto;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
 .loader {
-  border: 8px solid #f3f3f3; /* White border */
-  border-top: 8px solid #3498db; /* Blue border for animation */
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite; /* Faster rotation */
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 #floatingButton {
-  position: fixed;
-  bottom: 40px;
-  right: 20px;
-  z-index: 1000;
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    z-index: 1000;
 }
 
 #readModeButton {
-  background-color: #000000cf;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #000000cf;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #readModeButton:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
+
+form {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 120px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.floating-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
 
   </style>
 </head>
@@ -191,7 +244,14 @@
   <article id="postContent">
     <!-- Post content will be displayed here -->
   </article>
+  
+<h3>Beri kami komentar disini!!</h3>
+<hr>
 
+
+
+           
+            
 <div id="overlay">
     <div class="loader"></div>
   </div>
@@ -200,12 +260,26 @@
 <div id="floatingButton">
   <button id="readModeButton"><i class="fas fa-book-open"></i></button>
 </div>
-
+ <form id="contactForm">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Pesan:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <input type="submit" value="Kirim">
+            </form>
 <!-- fitur -->
 
   <footer>
+      
     <p>&copy; 2024 Sanzview</p>
   </footer>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
@@ -295,6 +369,44 @@ document.getElementById("readModeButton").addEventListener("click", function() {
 });
 
 <!-- fitur -->
+
+<!-- komentar -->
+emailjs.init("m_cJTc3CBeWJutcZS");
+
+function sendContactForm(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const form = document.getElementById('contactForm');
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    emailjs.send("service_k5d9xd7", "template_i7ittgf", {
+        from_name: name,
+        from_email: email,
+        message: message
+    }).then(function(response) {
+        showMessage('success', 'Pesan telah berhasil dikirim.');
+        form.reset();
+    }, function(error) {
+        showMessage('error', 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.');
+    });
+
+    return false;
+}
+
+
+document.getElementById('contactForm').addEventListener('submit', sendContactForm);
+
+function showMessage(type, message) {
+    const floatingMessage = document.getElementById('floatingMessage');
+    floatingMessage.textContent = message;
+    floatingMessage.classList.add(type + '-message');
+    setTimeout(() => {
+        floatingMessage.textContent = '';
+        floatingMessage.classList.remove(type + '-message');
+    }, 3000);
+}
   </script>
 </body>
 </html>
